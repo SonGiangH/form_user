@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .d-flex {
+        display: flex;
+      }
+
+      .label {
+        display: inline-block;
+        width: 150px;
+      }
+
+      .mbot-10 {
+        margin-bottom: 10px;
+      }
+
+      .gender-option {
+        width: 25%;
+        justify-content: space-between;
+      }
+
+      table,
+      thead,
+      tbody,
+      td,
+      th {
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+
+      th {
+        padding: 10px;
+      }
+
+      td {
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 25px;
+      }
+
+      .mtop-10 {
+        margin-top: 10px;
+      }
+
+      .search-box {
+        position: relative;
+        width: 250px;
+      }
+
+      .icon-search {
+        position: absolute;
+        right: 10px;
+        cursor: pointer;
+      }
+    </style>
+    <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+    <title>DOM Exercise</title>
+  </head>
+  <body>
+    <div class="contaier">
+      <!-- Form -->
+      <div class="form-container">
+        <form action="" id="add-user-form">
+          <div class="d-flex mbot-10">
+            <div class="label">
+              <label for="">ID</label>
+            </div>
+            <div class="input-area">
+              <input type="text" id="user-id" value="" placeholder />
+            </div>
+          </div>
+
+          <div class="d-flex mbot-10">
+            <div class="label">
+              <label for="">User Name</label>
+            </div>
+
+            <div class="input-area">
+              <input type="text" id="user-name" value="" placeholder />
+            </div>
+          </div>
+          <div class="d-flex mbot-10">
+            <div class="label">
+              <label for="">Age</label>
+            </div>
+
+            <div class="input-area">
+              <input type="text" id="user-age" value="" placeholder />
+            </div>
+          </div>
+          <div class="d-flex mbot-10">
+            <div class="label">
+              <label for="">City</label>
+            </div>
+
+            <div class="input-area">
+              <input type="text" id="user-city" value="" placeholder />
+            </div>
+          </div>
+          <div class="d-flex mbot-10">
+            <div class="label">
+              <label for="">Street</label>
+            </div>
+            <div class="input-area">
+              <input type="text" id="user-street" value="" placeholder />
+            </div>
+          </div>
+
+          <button type="button" id="submit-btn">Add User</button>
+          <button type="button" id="update-btn">Update User</button>
+        </form>
+      </div>
+      <!-- end of Form -->
+
+      <div class="search-box d-flex mtop-10">
+        <div class="search-name">
+          <span>Search Name</span>
+          <input type="text" id="search-name" value="" placeholder />
+        </div>
+        <div class="icon-search" id="">
+          <box-icon name="search"></box-icon>
+        </div>
+      </div>
+      <button type="button" id="btn-search">Search</button>
+
+      <!-- Table -->
+      <table class="mtop-10">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+
+        <tbody id="body-table">
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- end of table -->
+    </div>
+
+    <script>
+      // Tạo mảng đối tượng User(id, name, age, address) global dùng chung, giả sử lúc đầu mảng có 1 đối tượng User sẵn fix cứng trước. giá trị tuỳ ý.
+      let users = [
+        {
+          id: "1",
+          name: "Nguyen Van A",
+          age: 30,
+          address: {
+            street: "Lac Long Quan",
+            city: "Ha noi"
+          }
+        },
+        {
+          id: "2",
+          name: "Athony John",
+          age: 25,
+          address: {
+            street: "Hawker Str",
+            city: "Sydney"
+          }
+        },
+        {
+          id: "3",
+          name: "Trinh Ha Dong",
+          age: 36,
+          address: {
+            street: "Hong Bang",
+            city: "Ho Chi Minh"
+          }
+        },
+        {
+          id: "4",
+          name: "Le Thi Hoa",
+          age: 27,
+          address: {
+            street: "Le Loi",
+            city: "Hai Phong"
+          }
+        },
+        {
+          id: "5",
+          name: "Vu Anh Vien",
+          age: 20,
+          address: {
+            street: "Le Qui Don",
+            city: "Can Tho"
+          }
+        }
+      ];
+
+      let idInputElement = document.getElementById("user-id");
+      let nameInputElement = document.getElementById("user-name");
+      let ageInputElement = document.getElementById("user-age");
+      let cityInputElement = document.getElementById("user-city");
+      let streetInputElement = document.getElementById("user-street");
+
+      // Tìm kiếm User:
+      // Viết 1 hàm truyền vào tham số mảng user tên createTable(userArray), bên trong sẽ Vẽ Table Dynamic để show danh sách người dùng user.
+      // Fix cứng các cột tiêu đề, dynamic dùng dom vẽ nội dung for từng user trong mảng.
+      function createTR(user) {
+        let tbodyElement = document.getElementById("body-table");
+        let trElement = document.createElement("tr");
+
+        // create cell ID
+        let tdElement1 = document.createElement("td");
+        tdElement1.innerHTML = user.id;
+        // create cell Name
+        let tdElement2 = document.createElement("td");
+        tdElement2.innerHTML = user.name;
+        // create cell Age
+        let tdElement3 = document.createElement("td");
+        tdElement3.innerHTML = user.age;
+        // create cell City
+        let tdElement4 = document.createElement("td");
+        tdElement4.innerHTML = user.address.city;
+        // create cell Street
+        let tdElement5 = document.createElement("td");
+        tdElement5.innerHTML = user.address.street;
+        // create cell Option with 2 buttons Delete and Edit
+        let tdElement6 = document.createElement("td");
+
+        let buttonDelete = document.createElement("button");
+        buttonDelete.innerHTML = "Delete";
+        buttonDelete.onclick = function () {
+          deleteUser(user.id);
+        };
+
+        let buttonEdit = document.createElement("button");
+        buttonEdit.innerHTML = "Edit";
+        buttonEdit.onclick = function () {
+          editUser(user.id); // get user from user.id to display on form
+        };
+
+        tdElement6.appendChild(buttonDelete);
+        tdElement6.appendChild(buttonEdit);
+
+        // TR append child td
+        trElement.appendChild(tdElement1);
+        trElement.appendChild(tdElement2);
+        trElement.appendChild(tdElement3);
+        trElement.appendChild(tdElement4);
+        trElement.appendChild(tdElement5);
+        trElement.appendChild(tdElement6);
+
+        // Tbody append child tr
+        tbodyElement.appendChild(trElement);
+      }
+
+      function createTable(users) {
+        document.getElementById("body-table").innerHTML = "";
+        for (let i = 0; i < users.length; i++) {
+          createTR(users[i]);
+        }
+      }
+
+      createTable(users);
+
+      let btnSearch = document.getElementById("btn-search");
+      let searchUserElementInput = document.getElementById("search-name");
+
+      btnSearch.onclick = function () {
+        search();
+      };
+
+      // CRUD (Add-Delete-Update/Edit-Search)
+
+      function search() {
+        let result = [];
+
+        // lặp qua mảng users
+        for (let i = 0; i < users.length; i++) {
+          let listUserFound = searchUserElementInput.value;
+          let name = users[i].name;
+          let a = name.indexOf(listUserFound);
+
+          if (a !== -1) {
+            result.push(users[i]);
+          }
+        }
+        createTable(result);
+      }
+
+      // Add user
+      // Create User Form, add event to submit button, Add user to user List from form input.
+      // Check requirement for user 's input'
+      // Vẽ lại table user using function createTable
+      let submitBtn = document.getElementById("submit-btn");
+
+      function checkID() {
+        if (idInputElement.value.length == 0) {
+          let pElement = document.createElement("p");
+          pElement.innerHTML = "Please enter your ID";
+          pElement.style.color = "red";
+          idInputElement.parentElement.appendChild(pElement);
+          return false;
+        }
+        return true;
+      }
+
+      function checkName() {
+        if (nameInputElement.value.length == 0) {
+          let pElement = document.createElement("p");
+          pElement.innerHTML = "Please enter your name";
+          pElement.style.color = "red";
+          nameInputElement.parentElement.appendChild(pElement);
+          return false;
+        }
+        return true;
+      }
+
+      function checkAge() {
+        if (ageInputElement.value.length == 0) {
+          let pElement = document.createElement("p");
+          pElement.innerHTML = "Please enter your age";
+          pElement.style.color = "red";
+          ageInputElement.parentElement.appendChild(pElement);
+          return false;
+        }
+        return true;
+      }
+
+      function checkStreet() {
+        if (streetInputElement.value.length == 0) {
+          let pElement = document.createElement("p");
+          pElement.innerHTML = "Please enter your street";
+          pElement.style.color = "red";
+          streetInputElement.parentElement.appendChild(pElement);
+          return false;
+        }
+        return true;
+      }
+
+      function checkCity() {
+        if (cityInputElement.value.length == 0) {
+          let pElement = document.createElement("p");
+          pElement.innerHTML = "Please enter your city";
+          pElement.style.color = "red";
+          streetInputElement.parentElement.appendChild(pElement);
+          return false;
+        }
+        return true;
+      }
+
+      // remove alert when typing in input
+      idInputElement.onkeyup = function () {
+        if (idInputElement.value.length > 0) {
+          if (idInputElement.nextSibling) {
+            idInputElement.parentElement.removeChild(
+              idInputElement.nextSibling
+            );
+          }
+        }
+      };
+      nameInputElement.onkeyup = function () {
+        if (nameInputElement.value.length > 0) {
+          if (nameInputElement.nextSibling) {
+            nameInputElement.parentElement.removeChild(
+              nameInputElement.nextSibling
+            );
+          }
+        }
+      };
+      ageInputElement.onkeyup = function () {
+        if (ageInputElement.value.length > 0) {
+          if (ageInputElement.nextSibling) {
+            ageInputElement.parentElement.removeChild(
+              ageInputElement.nextSibling
+            );
+          }
+        }
+      };
+      cityInputElement.onkeyup = function () {
+        if (cityInputElement.value.length > 0) {
+          if (cityInputElement.nextSibling) {
+            cityInputElement.parentElement.removeChild(
+              cityInputElement.nextSibling
+            );
+          }
+        }
+      };
+      streetInputElement.onkeyup = function () {
+        if (streetInputElement.value.length > 0) {
+          if (streetInputElement.nextSibling) {
+            streetInputElement.parentElement.removeChild(
+              streetInputElement.nextSibling
+            );
+          }
+        }
+      };
+
+      submitBtn.onclick = function () {
+        while (
+          checkID() &&
+          checkName() &&
+          checkAge() &&
+          checkStreet() &&
+          checkCity()
+        ) {
+          addUser();
+          break;
+        }
+      };
+
+      function addUser() {
+        let user = {
+          id: idInputElement.value,
+          name: nameInputElement.value,
+          age: ageInputElement.value,
+          address: {
+            city: cityInputElement.value,
+            street: streetInputElement.value
+          }
+        };
+        users.push(user);
+        createTable(users);
+      }
+      // Update / Edit user
+      function editUser(id) {
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].id == id) {
+            //display on form
+            idInputElement.value = users[i].id;
+            nameInputElement.value = users[i].name;
+            ageInputElement.value = users[i].age;
+            cityInputElement.value = users[i].address.city;
+            streetInputElement.value = users[i].address.street;
+          }
+        }
+      }
+
+      let btnUpdate = document.getElementById("update-btn");
+
+      btnUpdate.onclick = function () {
+        for (let i = 0; i < users.length; i++) {
+          if (idInputElement.value === users[i].id) {
+            users[i].name = nameInputElement.value;
+            users[i].age = ageInputElement.value;
+            users[i].address.city = cityInputElement.value;
+            users[i].address.street = streetInputElement.value;
+          }
+        }
+        createTable(users);
+      };
+      // Delete users
+      function deleteUser(id) {
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].id === id) {
+            users.splice(i, 1);
+            break;
+          }
+        }
+        createTable(users);
+      }
+    </script>
+  </body>
+</html>
