@@ -156,7 +156,7 @@
     </div>
 
     <script>
-      // Tạo mảng đối tượng User(id, name, age, address) global dùng chung, giả sử lúc đầu mảng có 1 đối tượng User sẵn fix cứng trước. giá trị tuỳ ý.
+      
       let users = [
         {
           id: "1",
@@ -211,9 +211,7 @@
       let cityInputElement = document.getElementById("user-city");
       let streetInputElement = document.getElementById("user-street");
 
-      // Tìm kiếm User:
-      // Viết 1 hàm truyền vào tham số mảng user tên createTable(userArray), bên trong sẽ Vẽ Table Dynamic để show danh sách người dùng user.
-      // Fix cứng các cột tiêu đề, dynamic dùng dom vẽ nội dung for từng user trong mảng.
+      
       function createTR(user) {
         let tbodyElement = document.getElementById("body-table");
         let trElement = document.createElement("tr");
@@ -300,7 +298,7 @@
       // Add user
       // Create User Form, add event to submit button, Add user to user List from form input.
       // Check requirement for user 's input'
-      // Vẽ lại table user using function createTable
+      
       let submitBtn = document.getElementById("submit-btn");
 
       function checkID() {
