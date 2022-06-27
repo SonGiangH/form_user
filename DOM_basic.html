@@ -90,11 +90,18 @@
         let s = "ba"
         
         for (let i = 0; i < pBioArray.length; i++) {
-            if (pBioArray[i].includes(s)) {
+            if (pBioArray[i] === s) {
                 count++;
             }
         }
         console.log(count)
+
+        // for (let word in pBioArray) {
+        //   if (word === s) count++;
+        // }
+
+        let result = pBioArray.filter(word => word === "ba")
+        console.log(`số phần tử "ba" là : ${result.length}`)
         
         let numOfWords = document.querySelector(".num-of-words")
         numOfWords.innerHTML = `Đoạn văn trên có tất cả ${count} từ Ba`     
