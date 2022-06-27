@@ -44,12 +44,9 @@
         const profile = "https://twitter.com/banx9x"        
         
     //   Thay đổi nội dung của thẻ title thành giá trị của heading
-        let headChild = document.head.children;        
-        let title = headChild[3];  
-        title.innerHTML = heading;
+        document.title = heading;
     // 2. Thay đổi nội dung của thẻ h1 thành giá trị của heading
-        let h1 = document.body.firstElementChild;
-        h1.innerHTML = heading;
+        document.querySelector(".heading").textContent = heading;
     // 4. Thay đổi src của thẻ link thành giá trị của profile
         let profileElement = document.getElementsByClassName("profile")
         profileElement.href = profile;
@@ -74,7 +71,7 @@
         let minute = now.getMinutes();
         let second = now.getSeconds();
         let date = now.getDate();
-        let month = now.getMonth();
+        let month = now.getMonth()+1;
         let year = now.getFullYear();
         let timeInfo = `${hour}:${minute}:${second}, ${date}/${month}/${year}`
         console.log(timeInfo)
